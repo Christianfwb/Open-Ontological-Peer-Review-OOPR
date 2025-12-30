@@ -141,4 +141,4 @@ Das Resonanz-Prinzip und das OOPR-Protokoll formulieren eine Ontologie kollektiv
 
 ---
 
-Würdest du gerne wissen, wie man diesen Text direkt in eine PDF umwandelt, damit die Formatierung überall gleich bleibt?
+
