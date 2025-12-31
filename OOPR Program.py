@@ -1,5 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { ChevronRight, ChevronDown, Play, FileText, Download, Loader2, Sun, Moon, AlertCircle, Clock } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { ChevronRight, ChevronDown, Play, FileText, Download, Loader2, Sun, Moon, AlertCircle, StopCircle, RotateCcw } from 'lucide-react';
+
+// Version constants
+const OOPR_VERSION = '2.2.3';
+const PROMPT_VERSION = '2.2.3';
 
 const REVIEW_AXES = [
   {
@@ -15,8 +19,8 @@ const REVIEW_AXES = [
 {MODEL_TEXT}
 
 Focus strictly on **Axiomatic Clarity**:
-1. Are the base axioms (Frequency f as primary ontological constant) explicitly stated without any circular reasoning?
-2. Is there a clean, non-overlapping separation between primary primitives (f, Null-Space) and emergent quantities (m = h f / c², T = ΔΦ / f, E = h f)?
+1. Are the base axioms explicitly stated without any circular reasoning?
+2. Is there a clean, non-overlapping separation between primary primitives and emergent quantities (e.g., mass, time, energy)?
 3. Identify every hidden or implicit assumption that is not explicitly declared.
 4. Assess whether this axiomatic base is robust enough to support a complete alternative physical ontology — or if it collapses under scrutiny.
 
@@ -28,16 +32,16 @@ Be merciless: name any circularity, vagueness or sleight-of-hand immediately.`
     questions: [
       'Do variables scale consistently?',
       'Are there mathematical singularities or undefined behaviors?',
-      'Is the RAM→ROM transition precisely defined?'
+      'Are transitions between states precisely defined?'
     ],
     prompt: `Act as a mathematical physicist. Perform a strict consistency check on this framework:
 
 {MODEL_TEXT}
 
 Focus strictly on **Internal Consistency**:
-1. Check the scaling behaviour: if f → k·f (k ≠ 1), do m, T, E transform consistently according to the proposed relations?
-2. Are there any regimes (e.g. f → 0, f → ∞, ΔΦ → 0, or phase-locked states) that produce mathematical singularities, undefined behaviour or logical contradictions?
-3. Is the transition from dynamic RAM (unstable oscillations) to stable ROM (mass-bearing particles) governed by a precise, non-arbitrary rule?
+1. Check the scaling behaviour: do variables transform consistently according to the proposed relations?
+2. Are there any regimes (e.g., extreme values or special states) that produce mathematical singularities, undefined behaviour or logical contradictions?
+3. Is the transition from dynamic to stable states governed by a precise, non-arbitrary rule?
 4. Verify that no definition changes meaning depending on context.
 
 Point out every contradiction or inconsistency — no matter how small.`
@@ -46,8 +50,8 @@ Point out every contradiction or inconsistency — no matter how small.`
     id: 'derivation',
     title: 'C. Logical Derivation',
     questions: [
-      'Is emergence of time T = ΔΦ / f deductively necessary?',
-      'How justified is the leap from frequency to inertial mass?',
+      'Are emergent phenomena deductively necessary?',
+      'How justified is the leap from primitives to observables?',
       'Where is the weakest step in the derivation chain?'
     ],
     prompt: `Act as a critical philosopher of physics. Trace the logical derivation chain in this model:
@@ -55,9 +59,9 @@ Point out every contradiction or inconsistency — no matter how small.`
 {MODEL_TEXT}
 
 Focus strictly on **Logical Derivation**:
-1. Is the emergence of time T = ΔΦ / f a deductive necessity or merely a suggestive analogy?
-2. How rigorously is the ontological leap from pure frequency (abstract wave) to concrete inertial mass (m = h f / c²) justified?
-3. Critique the weakest step(s) in the chain: from Null-Space → frequency → phase → time → matter → observable physics.
+1. Are emergent phenomena (time, mass, energy, etc.) deductive necessities or merely suggestive analogies?
+2. How rigorously is the ontological leap from primary primitives to concrete observables justified?
+3. Critique the weakest step(s) in the derivation chain from foundational principles to observable physics.
 4. Identify any "magical jumps", non-sequiturs or appeals to intuition instead of deduction.
 
 Be brutally honest: name the exact point(s) where the logic breaks or becomes hand-wavy.`
@@ -75,8 +79,8 @@ Be brutally honest: name the exact point(s) where the logic breaks or becomes ha
 {MODEL_TEXT}
 
 Focus strictly on **Conceptual Precision**:
-1. Are all key terms (Null-Space, Frequenzknoten, Phase-Synchronisation, RAM/ROM, Resonanz) defined unambiguously and without equivocation?
-2. Is metaphorical language (e.g. "geronnene Schwingung", "Bildwiederholrate der Realität") clearly separated from formal, operational definitions?
+1. Are all key terms in the model defined unambiguously and without equivocation?
+2. Is metaphorical language clearly separated from formal, operational definitions?
 3. Can the central concepts be operationalized or at least mapped to measurable quantities without losing their ontological meaning?
 4. Highlight any terms that remain vague, poetic or undefined in critical contexts.
 
@@ -96,7 +100,7 @@ Demand absolute clarity — call out every ambiguity.`
 
 Focus strictly on **Model Scope & Boundaries**:
 1. Precisely list which phenomena the model claims to explain ontologically (and which not).
-2. Where does the model intentionally stop? Does it acknowledge areas where it makes no claims (e.g. specific force laws, cosmology, quantum gravity)?
+2. Where does the model intentionally stop? Does it acknowledge areas where it makes no claims?
 3. Are all limitations, assumptions and non-claims explicitly stated?
 4. Does the model overreach into domains it cannot legitimately cover, or does it stay within its declared boundaries?
 
@@ -107,8 +111,8 @@ Be ruthless: expose any hidden overclaims or unacknowledged gaps.`
     title: 'F. Falsifiability & Kill-Test',
     questions: [
       'What specific observation would prove the model wrong?',
-      'Does it make predictions distinct from Standard Model/GR?',
-      'Is it a theory of everything (too broad) or a testable model?'
+      'Does it make predictions distinct from existing models?',
+      'Is it testable or pure metaphysics?'
     ],
     prompt: `Act as a hard-nosed experimental physicist. Your goal is to find the "Kill-Point" of this model:
 
@@ -117,7 +121,7 @@ Be ruthless: expose any hidden overclaims or unacknowledged gaps.`
 Focus strictly on **Falsifiability**:
 1. Identify exactly one experimental result or observation that would definitively falsify this framework.
 2. Does the model offer "safe havens" (vague definitions) that allow it to escape disproof?
-3. Compare its predictions to the Standard Model: where is the measurable divergence?
+3. Compare its predictions to existing models: where is the measurable divergence?
 4. If the model explains everything post-hoc without predicting new phenomena, label it as "Metaphysical Speculation" and explain why.
 
 If you cannot name a single decisive falsifier, write exactly: "NOT FALSIFIABLE (CURRENT DEFINITIONS)" and explain which definition prevents falsification.
@@ -128,8 +132,8 @@ Be merciless: demand concrete, falsifiable predictions.`
     id: 'economy',
     title: 'G. Terminological Economy (Occam\'s Razor)',
     questions: [
-      'Are new terms (Null-Space, RAM/ROM) strictly necessary?',
-      'Can the same logic be expressed with existing physical terms?',
+      'Are new terms strictly necessary?',
+      'Can the same logic be expressed with existing terms?',
       'Is there "conceptual bloat"?'
     ],
     prompt: `Act as a linguistic analyst and philosopher of science. Strip this model to its bare essentials:
@@ -137,8 +141,8 @@ Be merciless: demand concrete, falsifiable predictions.`
 {MODEL_TEXT}
 
 Focus strictly on **Conceptual Economy**:
-1. Audit every neologism (e.g., RAM/ROM, Null-Space, Frequenzknoten). Are they necessary, or do they mask existing concepts under new names?
-2. If we remove the metaphorical layer (e.g., "frozen oscillation"), what remains of the formal structure?
+1. Audit every neologism in the model. Are they necessary, or do they mask existing concepts under new names?
+2. If we remove the metaphorical layer, what remains of the formal structure?
 3. Apply Occam's Razor: Is this the simplest way to explain the phenomena, or does it add unnecessary ontological layers?
 4. Identify "Poetic Noise" — language that sounds profound but lacks operational definition.
 
@@ -165,6 +169,17 @@ const API_PROVIDERS = {
 
 const EXAMPLE_MODEL = `# Frequenzgesetz - Example Input
 
+## Ontology Structure:
+**Primary Entity:** Pure Frequency (f) as the fundamental ontological constant
+**Emergence Chain:** 
+- Phase (Φ) emerges from frequency oscillations
+- Time (T) emerges from phase differences: T = ΔΦ/f
+- Mass (m) emerges from frequency: m = hf/c²
+- Energy (E) emerges from frequency: E = hf
+
+**Pre-Frequent State:** Null-Space - maximal potential without time or structure
+**Consciousness:** Resonant interface with frequency fields
+
 ## Core Axioms:
 1. Frequency (f) is the primary organizing constant of reality
 2. Mass emerges as: m = hf/c²
@@ -176,10 +191,10 @@ const EXAMPLE_MODEL = `# Frequenzgesetz - Example Input
 - Matter is ROM (stabilized oscillation)
 - Consciousness = F(f, ΔΦ, R)
 
-## Null-Space Foundation:
-- Pre-frequent state of maximal potential
-- Light structure as universal carrier
-- Frequency as the primal beat`;
+## Derivations:
+From f as primary → m = hf/c² (via E=mc² and E=hf)
+From phase differences → T = ΔΦ/f (operational time)
+From resonance → observable phenomena`;
 
 export default function OOPRTool() {
   const [modelText, setModelText] = useState('');
@@ -188,6 +203,10 @@ export default function OOPRTool() {
   const [loadingAxes, setLoadingAxes] = useState({});
   const [expandedAxis, setExpandedAxis] = useState(null);
   const [darkMode, setDarkMode] = useState(true);
+  const [runMode, setRunMode] = useState('missing'); // 'missing' or 'all'
+  
+  const cancelRef = useRef(false);
+  const abortControllerRef = useRef(null);
 
   // Calculate these first, before any functions use them
   const completedCount = Object.keys(reviews).length;
@@ -265,9 +284,27 @@ export default function OOPRTool() {
     }
     if (isAnyLoading) return;
 
+    // Reset cancel flag
+    cancelRef.current = false;
+
+    // Get current reviews snapshot
+    const currentReviews = runMode === 'all' ? {} : reviews;
+    
+    // If mode is 'all', clear existing reviews
+    if (runMode === 'all') {
+      setReviews({});
+      await sleep(100); // Let state update
+    }
+
     for (const axis of REVIEW_AXES) {
-      // Skip already reviewed
-      if (reviews[axis.id]) continue;
+      // Check for cancellation
+      if (cancelRef.current) {
+        alert('Review process stopped by user.');
+        break;
+      }
+
+      // Skip already reviewed (only in 'missing' mode, using snapshot)
+      if (runMode === 'missing' && currentReviews[axis.id]) continue;
 
       const ok = await runReview(axis);
 
@@ -276,17 +313,31 @@ export default function OOPRTool() {
 
       // If failed, stop the queue
       if (!ok) {
-        alert(`Stopped at ${axis.title}. Fix the issue and continue manually.`);
+        if (!cancelRef.current) { // Don't show error if user cancelled
+          alert(`Stopped at ${axis.title}. Fix the issue and continue manually.`);
+        }
         break;
       }
+    }
+
+    cancelRef.current = false;
+  };
+
+  const stopReviews = () => {
+    cancelRef.current = true;
+    // Abort current request if running
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
     }
   };
 
   const generateReport = () => {
-    let report = `# OOPR Review Report v2.2\n`;
+    let report = `# OOPR Review Report v2.2.2\n`;
     report += `**Generated:** ${new Date().toISOString()}\n`;
     report += `**Provider:** ${API_PROVIDERS[selectedProvider].name}\n`;
-    report += `**Completed:** ${completedCount}/${totalAxes} axes\n\n`;
+    report += `**Model:** ${API_PROVIDERS[selectedProvider].model}\n`;
+    report += `**Completed:** ${completedCount}/${totalAxes} axes\n`;
+    report += `**Note:** Model-agnostic review protocol\n\n`;
     report += `---\n\n`;
     report += `## Reviewed Model\n\n${modelText}\n\n`;
     report += `---\n\n`;
@@ -295,7 +346,8 @@ export default function OOPRTool() {
       if (reviews[axis.id]) {
         report += `## ${axis.title}\n\n`;
         report += `**Reviewed by:** ${reviews[axis.id].provider}\n`;
-        report += `**Timestamp:** ${new Date(reviews[axis.id].timestamp).toLocaleString()}\n\n`;
+        report += `**Timestamp:** ${new Date(reviews[axis.id].timestamp).toLocaleString()}\n`;
+        report += `**Prompt Version:** ${reviews[axis.id].promptVersion}\n\n`;
         report += `${reviews[axis.id].text}\n\n`;
         report += `---\n\n`;
       }
@@ -306,16 +358,27 @@ export default function OOPRTool() {
 
   const buildSnapshot = () => ({
     tool: 'OOPR',
-    version: '2.2',
+    version: '2.2.2',
     generatedAt: new Date().toISOString(),
-    provider: API_PROVIDERS[selectedProvider].name,
+    provider: {
+      name: API_PROVIDERS[selectedProvider].name,
+      model: API_PROVIDERS[selectedProvider].model,
+      url: API_PROVIDERS[selectedProvider].url
+    },
     modelText,
     axes: REVIEW_AXES.map((a) => ({
       id: a.id,
       title: a.title,
-      questions: a.questions
+      questions: a.questions,
+      prompt: a.prompt // Include full prompt for reproducibility
     })),
-    reviews
+    reviews,
+    metadata: {
+      totalAxes: REVIEW_AXES.length,
+      completedAxes: Object.keys(reviews).length,
+      maxTokens: 2000,
+      note: 'Generalized prompts - model-agnostic review protocol'
+    }
   });
 
   const downloadJSON = () => {
@@ -345,10 +408,10 @@ export default function OOPRTool() {
           <div className="flex justify-between items-start mb-4">
             <div>
               <h1 className="text-5xl font-bold mb-2 bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
-                OOPR Tool v2.2
+                OOPR Tool v{OOPR_VERSION}
               </h1>
               <p className={`text-lg ${darkMode ? 'text-slate-300' : 'text-gray-600'}`}>
-                Open Ontological Peer Review — Queue Edition
+                Open Ontological Peer Review — Stable Edition
               </p>
             </div>
             <div className="flex items-center gap-3">
@@ -362,23 +425,45 @@ export default function OOPRTool() {
                   <option key={key} value={key}>{prov.name}</option>
                 ))}
               </select>
-              <button
-                onClick={runAllReviews}
-                disabled={isAnyLoading || !modelText.trim()}
-                className="px-5 py-2.5 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg font-medium transition-colors flex items-center gap-2 shadow-lg"
+              
+              <select
+                value={runMode}
+                onChange={(e) => setRunMode(e.target.value)}
+                disabled={isAnyLoading}
+                className={`px-4 py-2 rounded-lg font-medium border focus:outline-none focus:ring-2 focus:ring-purple-500 ${isAnyLoading ? 'opacity-50 cursor-not-allowed' : ''} ${darkMode ? 'bg-slate-800 border-slate-600 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
               >
-                {isAnyLoading ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    Running...
-                  </>
-                ) : (
-                  <>
-                    <Play className="w-4 h-4" />
-                    Run All ({totalAxes})
-                  </>
-                )}
-              </button>
+                <option value="missing">Run Missing</option>
+                <option value="all">Re-run All</option>
+              </select>
+
+              {isAnyLoading ? (
+                <button
+                  onClick={stopReviews}
+                  className="px-5 py-2.5 bg-red-600 hover:bg-red-700 rounded-lg font-medium transition-colors flex items-center gap-2 shadow-lg"
+                >
+                  <StopCircle className="w-4 h-4" />
+                  Stop
+                </button>
+              ) : (
+                <button
+                  onClick={runAllReviews}
+                  disabled={!modelText.trim()}
+                  className="px-5 py-2.5 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg font-medium transition-colors flex items-center gap-2 shadow-lg"
+                >
+                  {runMode === 'all' ? (
+                    <>
+                      <RotateCcw className="w-4 h-4" />
+                      Re-run All ({totalAxes})
+                    </>
+                  ) : (
+                    <>
+                      <Play className="w-4 h-4" />
+                      Run Missing ({totalAxes - completedCount})
+                    </>
+                  )}
+                </button>
+              )}
+              
               <button
                 onClick={() => setDarkMode(!darkMode)}
                 className={`p-3 rounded-lg ${darkMode ? 'bg-slate-800 hover:bg-slate-700' : 'bg-white hover:bg-gray-100 border border-gray-300'} transition-colors`}
@@ -394,9 +479,8 @@ export default function OOPRTool() {
             <div className="flex items-start gap-3">
               <AlertCircle className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
               <div className="text-sm">
-                <strong>∞ − 1 = you</strong> | This tool uses mercilessly honest prompts to evaluate ontological frameworks.
-                Each AI reviewer acts as a skeptical expert, identifying weaknesses, gaps, and inconsistencies without mercy.
-                <span className={darkMode ? 'text-purple-300' : 'text-purple-700'}> Reviews are reproducible and exportable.</span>
+                <strong>∞ − 1 = you</strong> | Stable, production-ready protocol.
+                <strong className="block mt-1">v{OOPR_VERSION}:</strong> Hard stop control, consistent versioning, clean codebase. Always include your ontology structure for best results.
               </div>
             </div>
           </div>
@@ -420,7 +504,7 @@ export default function OOPRTool() {
             value={modelText}
             onChange={(e) => setModelText(e.target.value)}
             disabled={isAnyLoading}
-            placeholder="Enter your ontological model, framework, or theory here...&#10;&#10;Include:&#10;• Core axioms&#10;• Key principles&#10;• Foundational definitions&#10;• Derivations"
+            placeholder="Enter your ontological model, framework, or theory here...&#10;&#10;IMPORTANT: Include a clear Ontology Structure:&#10;• Primary entities/constants&#10;• Emergence chain (what emerges from what)&#10;• Core axioms&#10;• Key principles & derivations&#10;&#10;See example for proper formatting!"
             className={`w-full h-72 p-4 rounded-lg border font-mono text-sm resize-none focus:outline-none focus:ring-2 focus:ring-purple-500 ${isAnyLoading ? 'opacity-50 cursor-not-allowed' : ''} ${darkMode ? 'bg-slate-900 border-slate-600 text-slate-100 placeholder-slate-500' : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-400'}`}
           />
         </div>
@@ -574,7 +658,7 @@ export default function OOPRTool() {
               {REVIEW_AXES.filter(axis => reviews[axis.id]).map((axis) => (
                 <div 
                   key={axis.id}
-                  className={`p-4 rounded-lg border cursor-pointer transition-all hover:scale-[1.02] ${darkMode ? 'bg-slate-900/50 border-slate-600 hover:border-purple-500' : 'bg-gray-50 border-gray-200 hover:border-purple-400'}`}
+                  className={`p-4 rounded-lg border cursor-pointer transition-all hover:scale-[1.02] overflow-hidden ${darkMode ? 'bg-slate-900/50 border-slate-600 hover:border-purple-500' : 'bg-gray-50 border-gray-200 hover:border-purple-400'}`}
                   onClick={() => setExpandedAxis(axis.id)}
                 >
                   <div className="flex justify-between items-start mb-2">
@@ -583,7 +667,12 @@ export default function OOPRTool() {
                       {new Date(reviews[axis.id].timestamp).toLocaleTimeString()}
                     </span>
                   </div>
-                  <p className={`text-sm line-clamp-2 ${darkMode ? 'text-slate-300' : 'text-gray-700'}`}>
+                  <p className={`text-sm overflow-hidden ${darkMode ? 'text-slate-300' : 'text-gray-700'}`} style={{
+                    display: '-webkit-box',
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: 'vertical',
+                    maxHeight: '3em'
+                  }}>
                     {reviews[axis.id].text.substring(0, 150)}...
                   </p>
                   <div className="mt-2 text-xs text-purple-400 font-medium">
@@ -597,9 +686,9 @@ export default function OOPRTool() {
 
         {/* Footer */}
         <div className={`text-center text-sm ${darkMode ? 'text-slate-400' : 'text-gray-500'}`}>
-          <p className="font-semibold">OOPR v2.2 | Reproducible AI-Based Peer Review Protocol</p>
-          <p className="mt-1">Queue-based reviews • JSON snapshots • Kill-Test + Occam's Razor</p>
-          <p className="mt-3 text-xs italic">"Run All. Find the Kill-Point. Strip to essentials. Be merciless."</p>
+          <p className="font-semibold">OOPR v{OOPR_VERSION} | Stable Release</p>
+          <p className="mt-1">Hard stop • Clean code • Consistent versioning • Model-agnostic</p>
+          <p className="mt-3 text-xs italic">"Production-ready. GitHub-ready. Community-ready."</p>
         </div>
       </div>
     </div>
