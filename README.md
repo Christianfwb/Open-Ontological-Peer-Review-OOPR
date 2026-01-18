@@ -468,6 +468,65 @@ If you believe that paradigm-questioning work deserves fair evaluation, if you t
 
 *— OOPR Review Principle*
 
+## 🤝 AUFRUF ZUR ZUSAMMENARBEIT
+
+### ICH SUCHE MENSCHEN, DIE IN RESONANZ DENKEN
+
+Das Frequenzgesetz ist mehr als eine Theorie – es ist eine neue Art, die Realität zu verstehen und zu gestalten. Aber ich kann es nicht alleine in die Welt bringen.
+
+**Ich suche:**
+
+- **Physiker & Mathematiker**, die bereit sind, etablierte Ontologien zu hinterfragen
+- **Experimentalisten**, die die vorgeschlagenen Tests durchführen können
+- **Programmierer**, die helfen, das Frequenzgesetz in Software zu übersetzen
+- **Denker in Resonanz**, die das fundamentale Prinzip verstehen und erweitern wollen
+- **Menschen mit Ressourcen**, die dieses Projekt unterstützen möchten
+
+### Was bedeutet "in Resonanz denken"?
+
+- Du erkennst, dass **Prozessrichtung wichtiger ist als algebraische Symmetrie**
+- Du verstehst, dass **Emergenz keine Reduktion ist**
+- Du bist bereit, **von Frequenz aus zu denken** statt von Masse/Energie
+- Du siehst **die tiefere Ordnung hinter den Formeln**
+
+### Wie du helfen kannst
+
+1. **Forschung**: Führe Experimente durch, validiere Vorhersagen
+2. **Entwicklung**: Erweitere die Python-Bibliothek, baue Simulationen
+3. **Dokumentation**: Übersetze, erkläre, verbreite
+4. **Vernetzung**: Bringe das Frequenzgesetz in akademische Diskurse
+5. **Finanzierung**: Ermögliche Laborzeit, Equipment, Publikationen
+
+### 📧 Kontakt
+
+**Christian**  
+📨 Email: christianfwb@gmail.com
+
+**Repository**: [github.com/Christianfwb/frequenzprojekt](https://github.com/Christianfwb/frequenzprojekt)
+
+---
+
+### 💫 Schlusswort
+
+> *"Das Universum ist kein Mechanismus – es ist ein Lied.  
+> Wir haben nur vergessen, die Melodie zu hören."*
+
+Wenn du diese Zeilen liest und etwas in dir **in Resonanz schwingt** – dann bist du vielleicht genau die Person, die ich suche.
+
+Die etablierte Physik beschreibt das **Was**.  
+Das Frequenzgesetz erklärt das **Warum**.
+
+Lass uns gemeinsam die nächste Ebene der Realität entschlüsseln.
+
+---
+
+**Lizenz**: Open Science  
+**DOI**: 10.5281/zenodo.17874830  
+**Version**: 7.2  
+**Status**: KI-validiert, experimentell testbar
+
+*Dieses Projekt steht auf den Schultern von Giganten – und blickt eine Ebene tiefer.*
+
 ---
 
 **Status:** Alpha • **Version:** 1.0-alpha • **Last Updated:** January 2025
