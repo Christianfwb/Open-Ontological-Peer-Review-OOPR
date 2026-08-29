@@ -521,7 +521,7 @@ Lass uns gemeinsam die nächste Ebene der Realität entschlüsseln.
 ---
 
 **Lizenz**: Open Science  
-**DOI**: 10.5281/zenodo.17874830  
+**Frequency Law Zenodo series (all versions)**: [10.5281/zenodo.16727005](https://doi.org/10.5281/zenodo.16727005)
 **Version**: 7.2  
 **Status**: KI-validiert, experimentell testbar
 
